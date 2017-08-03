@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>ToList</title>
+	<!-- Materialize CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+	<!-- Materialize JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+
+	<!-- AngularJS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<!-- Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+	<div ng-app="app" ng-controller="ctrl_main">
+		<div class="row" style="padding-top: 100px;" >
+			<div class="center-align" style="font-size: 48px; color: #333;">
+				{{title}}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col s0 m3"></div>
+			<div class="col s12 m6">
+				<div class="input-field row">
+					<input id="first_name" type="text" class="validate" ng-keydown="detectReturn($event)" ng-model="userdata">
+					<label for="first_name">Whats need to be done?</label>
+				</div>
+				<p class="flow-text">{{tasktext}}</p>
+				<ul class="collection row">
+					<li ng-class="task.type=='completed'?'collection-item blue-grey lighten-4':'collection-item'" ng-repeat="task in list_task | filter:{type:filter} | orderBy:'type'" id="active_{{list_active.indexOf(task)}}">
+						{{task.content}}
+						<a href="#!" class="secondary-content" ng-click="markCompleted(task.id)" ng-show="task.type=='active'"><i class="material-icons green-text">check</i></a>
+						<a href="#!" class="secondary-content" ng-click="rescheduleTask(task.id)" ng-show="task.type=='completed'"><i class="material-icons blue-text">cached</i></a>
+						<a href="#!" class="secondary-content" ng-click="removeItem(task.id)"><i class="material-icons red-text">close</i></a>
+					</li>
+				</ul>
+
+				<ul class="pagination right-align">
+					<li ng-class="filter==''?'active':'waves-effect'" ng-click="filter=''"><a href="#!">All</a></li>
+					<li ng-class="filter=='active'?'active':'waves-effect'" ng-click="filter='active'"><a href="#!">Active</a></li>
+					<li ng-class="filter=='completed'?'active':'waves-effect'" ng-click="filter='completed'"><a href="#!">Completed</a></li>
+				</ul>
+			</div>
+			<div class="col s0 m3"></div>
+		</div>
+	</div>
+
+	<script src="./controllers/ctrl_app.js"></script>
+
+</body>
+</html>
